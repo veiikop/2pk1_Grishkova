@@ -28,7 +28,10 @@
             char[] lastElements = new char[rows];
             for (int i = 0; i < rows; i++)
             {
-                lastElements[i] = jaggedArray[i].Last();
+                if (jaggedArray[i].Length > 0)
+                {
+                    lastElements[i] = jaggedArray[i].Last();
+                }
             }
 
             // Вывод нового одномерного массива в консоль
@@ -38,7 +41,10 @@
             int[] maxElements = new int[rows];
             for (int i = 0; i < rows; i++)
             {
-                maxElements[i] = jaggedArray[i].Max();
+                if (jaggedArray[i].Length > 0)
+                {
+                    maxElements[i] = jaggedArray[i].Max();
+                }
             }
 
             // Вывод массива максимальных элементов в консоль
@@ -48,9 +54,17 @@
             for (int i = 0; i < rows; i++)
             {
                 int maxIndex = Array.IndexOf(jaggedArray[i], maxElements[i]);
-                char temp = jaggedArray[i][0];
-                jaggedArray[i][0] = jaggedArray[i][maxIndex];
-                jaggedArray[i][maxIndex] = temp;
+                if (maxIndex != -1)
+                {
+                    char temp = jaggedArray[i][0];
+                    jaggedArray[i][0] = jaggedArray[i][maxIndex];
+                    jaggedArray[i][maxIndex] = temp;
+                }
+                else
+                {
+                    // Обработка ситуации, когда максимальный элемент не найден
+                    Console.WriteLine("Максимальный элемент не найден в строке " + i);
+                }
             }
 
             // Вывод обновленного ступенчатого массива в консоль
