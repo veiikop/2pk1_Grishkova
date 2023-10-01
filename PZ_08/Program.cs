@@ -53,18 +53,13 @@
             // Замена первого элемента и максимального элемента в каждой строке
             for (int i = 0; i < rows; i++)
             {
-                int maxIndex = Array.IndexOf(jaggedArray[i], maxElements[i]);
-                if (maxIndex != -1)
-                {
-                    char temp = jaggedArray[i][0];
-                    jaggedArray[i][0] = jaggedArray[i][maxIndex];
-                    jaggedArray[i][maxIndex] = temp;
-                }
-                else
-                {
-                    // Обработка ситуации, когда максимальный элемент не найден
-                    Console.WriteLine("Максимальный элемент не найден в строке " + i);
-                }
+                char temp = jaggedArray[i][0];//первый элемент строки
+                //индекс максимального значения строки
+                int maxIndex = jaggedArray[i].ToList().IndexOf(jaggedArray[i].Max(),0);
+                //производим замену
+                jaggedArray[i][0] = jaggedArray[i][maxIndex];
+                jaggedArray[i][maxIndex] = temp;
+                
             }
 
             // Вывод обновленного ступенчатого массива в консоль
