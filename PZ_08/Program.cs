@@ -4,90 +4,118 @@
     {
         static void Main(string[] args)
         {
-            // Генерация ступенчатого массива символов
+            // создание ступенчатого массива
+            char[][] array = new char[9][];
             Random random = new Random();
-            int rows = 9;
-            char[][] jaggedArray = new char[rows][];
-            for (int i = 0; i < rows; i++)
+
+            for (int i = 0; i < array.Length; i++)
             {
-                int length = random.Next(10, 35); // Генерация случайной длины строки от 10 до 35
-                jaggedArray[i] = new char[length];
-                for (int j = 0; j < length; j++)
+                int length = random.Next(10, 36);
+                array[i] = new char[length];
+
+                for (int j = 0; j < array[i].Length; j++)
                 {
-                    jaggedArray[i][j] = (char)random.Next('A', 'Z' + 1); // Генерация случайного символа от A до Z
+                    // заполнение массива случайными символами от a до z
+                    array[i][j] = (char)random.Next('a', 'z' + 1);
                 }
             }
 
-            // Вывод ступенчатого массива в консоль
-            foreach (char[] row in jaggedArray)
+            // вывод сгенерированного массива
+            Console.WriteLine("Исходный массив:");
+            foreach (char[] row in array)
             {
                 Console.WriteLine(string.Join(" ", row));
             }
 
-            // Создание нового одномерного массива с последними элементами каждой строки
-            char[] lastElements = new char[rows];
-            for (int i = 0; i < rows; i++)
+            // создание нового одномерного массива и запись последних элементов каждой строки
+            char[] lastElements = new char[array.Length];
+
+            for (int i = 0; i < array.Length; i++)
             {
-                if (jaggedArray[i].Length > 0)
-                {
-                    lastElements[i] = jaggedArray[i].Last();
-                }
+                lastElements[i] = array[i][array[i].Length - 1];
             }
 
-            // Вывод нового одномерного массива в консоль
+            // вывод нового массива
+            Console.WriteLine("\nМассив последних элементов:");
             Console.WriteLine(string.Join(" ", lastElements));
 
-            // Нахождение максимального элемента в каждой строке и запись их в другой одномерный массив
-            int[] maxElements = new int[rows];
-            for (int i = 0; i < rows; i++)
+            // поиск максимальных элементов в каждой строке и запись их в новый массив
+            char[] maxElements = new char[array.Length];
+
+            for (int i = 0; i < array.Length; i++)
             {
-                if (jaggedArray[i].Length > 0)
+                char maxElement = array[i][0];
+
+                for (int j = 1; j < array[i].Length; j++)
                 {
-                    maxElements[i] = jaggedArray[i].Max();
+                    if (array[i][j] > maxElement)
+                    {
+                        maxElement = array[i][j];
+                    }
                 }
+
+                maxElements[i] = maxElement;
             }
 
-            // Вывод массива максимальных элементов в консоль
+            // вывод массива максимальных элементов
+            Console.WriteLine("\nМассив максимальных элементов:");
             Console.WriteLine(string.Join(" ", maxElements));
 
-            // Замена первого элемента и максимального элемента в каждой строке
-            for (int i = 0; i < rows; i++)
+            // замена первого элемента и максимального элемента в каждой строке
+            for (int i = 0; i < array.Length; i++)
             {
-                char temp = jaggedArray[i][0];//первый элемент строки
-                //индекс максимального значения строки
-                int maxIndex = jaggedArray[i].ToList().IndexOf(jaggedArray[i].Max(),0);
-                //производим замену
-                jaggedArray[i][0] = jaggedArray[i][maxIndex];
-                jaggedArray[i][maxIndex] = temp;
-                
+                char temp = array[i][0];
+                array[i][0] = maxElements[i];
+                maxElements[i] = temp;
             }
 
-            // Вывод обновленного ступенчатого массива в консоль
-            foreach (char[] row in jaggedArray)
+            // вывод обновленного массива
+            Console.WriteLine("\nОбновленный массив:");
+            foreach (char[] row in array)
             {
                 Console.WriteLine(string.Join(" ", row));
             }
 
-            // Реверс каждой строки ступенчатого массива
-            for (int i = 0; i < rows; i++)
+            // реверс каждой строки ступенчатого массива
+            for (int i = 0; i < array.Length; i++)
             {
-                Array.Reverse(jaggedArray[i]);
+                Array.Reverse(array[i]);
             }
 
-            // Вывод реверсированного ступенчатого массива в консоль
-            foreach (char[] row in jaggedArray)
+            // вывод реверсированного массива
+            Console.WriteLine("\nРеверсированный массив:");
+            foreach (char[] row in array)
             {
                 Console.WriteLine(string.Join(" ", row));
             }
 
-            // Подсчет наиболее встречающихся символов в каждой строке
-            foreach (char[] row in jaggedArray)
-            {
-                var mostFrequentChars = row.GroupBy(c => c).OrderByDescending(g => g.Count()).Select(g => g.Key).Take(3);
-                Console.WriteLine(string.Join(" ", mostFrequentChars));
-            }
+            // подсчет наиболее встречающихся символов в каждой строке
+            Console.WriteLine("\nНаиболее встречающиеся символы в каждой строке:");
 
-            Console.ReadLine();
+            foreach (char[] row in array)
+            {
+                int[] charCount = new int[26];
+
+                foreach (char c in row)
+                {
+                    charCount[c - 'a']++;
+                }
+
+                int maxCount = charCount[0];
+                char mostFrequentChar = 'a';
+
+                for (int i = 1; i < charCount.Length; i++)
+                {
+                    if (charCount[i] > maxCount)
+                    {
+                        maxCount = charCount[i];
+                        mostFrequentChar = (char)('a' + i);
+                    }
+                }
+
+                Console.WriteLine("Строка: " + string.Join(" ", row));
+                Console.WriteLine("Наиболее встречающийся символ: " + mostFrequentChar);
+            }
         }
     }
 }
