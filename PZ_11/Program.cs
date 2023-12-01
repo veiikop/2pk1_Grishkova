@@ -16,7 +16,7 @@
 
         static void Main(string[] args)
         {
-            int[] numbers = { 21, 7, 11, 89, 4 };
+            int[] numbers = { 21, 7, 11, 52, 4 };
             int maxValue;
             GetMax(numbers, out maxValue);
             Console.WriteLine("Max value: " + maxValue);
