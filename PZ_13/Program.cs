@@ -49,7 +49,7 @@
             }
         }
 
-        // задание 4
+        // задание 4 (на пятерку, №4)
         static void ReverseNumber(int num)
         {
             if (num < 10)
