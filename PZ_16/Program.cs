@@ -26,7 +26,7 @@ namespace PZ_16
         static int playerHP = 50;
         static int playerStrong = 10;
 
-        // Параметры  
+        // Параметры врагов
         static int eHp = 30;
         static sbyte eStrong = 5;
 
@@ -142,7 +142,7 @@ namespace PZ_16
                         {
                             for (int j = 0; j < mapSize; j++)
                             {
-                                map[i, j] = lines[i + 8][j];
+                                map[i, j] = lines[i + 6][j];
                             }
                         }
                         map[playerX, playerY] = 'P';
